@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps with Custom Content</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpaJYCXgblxej0IxY7XtU9du7EHKAb6i0"></script>
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 0, lng: 0 },
+                zoom: 2,
+            });
+
+            const countryData = {
+                Rwanda: {
+                    position: { lat: -1.94, lng: 29.87 },
+                    content: `<iframe src="https://docs.google.com/presentation/d/1BG-l8og_1z7qQEH45-AR-XBDwUt9PIa5/edit?usp=drive_link&ouid=104238876291900803966&rtpof=true&sd=true" width="800" height="600"></iframe>`
+                },
+                USA: {
+                    position: { lat: 37.09, lng: -95.71 },
+                    content: `<iframe src="RWT801climate.pdf" width="800" height="400"></iframe>`
+                },
+                France: {
+                    position: { lat: 46.22, lng: 2.21 },
+                    content: `<iframe src="https://www.youtube.com/embed/vbFeUpU_D20" width="100%" height="auto" frameborder="0" allowfullscreen></iframe>`
+                },
+                Japan: {
+                    position: { lat: 36.2, lng: 138.25 },
+                    content: `<iframe src="RWT801climate.pdf" width="800" height="400"></iframe>`
+                },
+                India: {
+                    position: { lat: 20.59, lng: 78.96 },
+                    content: `<iframe src="RWT801climate.pdf" width="800" height="400"></iframe>`
+                },
+            };
+
+            for (const country in countryData) {
+                const marker = new google.maps.Marker({
+                    position: countryData[country].position,
+                    map: map,
+                    title: country,
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: countryData[country].content,
+                });
+
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+            }
+        }
+
+        window.onload = initMap;</script>
+</body>
+</html>
